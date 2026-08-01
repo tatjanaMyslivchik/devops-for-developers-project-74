@@ -3,5 +3,5 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    image: tatjanamyslivchik/devops-for-developers-project-74:latest
+    image: tatjanamyslivchik/devops-for-developers-project-74:${DOCKER_TAG:-default}
     working_dir: /app
