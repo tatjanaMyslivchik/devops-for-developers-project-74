@@ -24,7 +24,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       
       - name: Run tests
-        run: make ci
+        run: cd app && make ci
       
       - name: Build production image
         run: docker-compose -f docker-compose.yml build app
