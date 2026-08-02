@@ -6,10 +6,11 @@ services:
     volumes:
       - ./app:/app
     command: make dev
-    # environment:
-    #   - NODE_ENV=development
     ports:
       - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
 
   caddy:
     image: caddy:alpine
@@ -21,13 +22,21 @@ services:
     depends_on:
       - app
 
-  # caddy:
-  #   build:
-  #     context: .
-  #     dockerfile: services/caddy/Dockerfile
-  #   restart: always
-  #   ports:
-  #     - "80:80"
-  #     - "443:443"
-  #   depends_on:
-  #     - app
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: ${DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
