@@ -25,6 +25,11 @@ jobs:
       
       - name: Run tests
         run: cd app && make ci
+        env:
+          DATABASE_HOST: ${{ secrets.DATABASE_HOST }}
+          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
+          DATABASE_USERNAME: ${{ secrets.DATABASE_USERNAME }}
+          DATABASE_PASSWORD: ${{ secrets.DATABASE_PASSWORD }}
       
       - name: Build production image
         run: docker compose -f docker-compose.yml build app
