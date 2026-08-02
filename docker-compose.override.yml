@@ -6,5 +6,28 @@ services:
     volumes:
       - ./app:/app
     command: make dev
+    # environment:
+    #   - NODE_ENV=development
     ports:
       - "8080:8080"
+
+  caddy:
+    image: caddy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./services/caddy/Caddyfile:/etc/caddy/Caddyfile
+    depends_on:
+      - app
+
+  # caddy:
+  #   build:
+  #     context: .
+  #     dockerfile: services/caddy/Dockerfile
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #     - "443:443"
+  #   depends_on:
+  #     - app
