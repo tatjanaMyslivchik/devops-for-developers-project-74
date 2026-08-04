@@ -32,25 +32,3 @@ lint-fix:
 
 test:
 	NODE_ENV=test npm test -s
-
-ci:
-	docker compose -f ../docker-compose.yml run -e NODE_ENV=test app make test
-
-# Docker Compose команды
-docker-setup:
-	docker compose run --rm app make setup
-
-docker-test:
-	docker compose -f docker-compose.yml up --abort-on-container-exit --exit-code-from app
-
-docker-dev:
-	docker compose up
-
-docker-down:
-	docker compose down
-
-docker-build:
-	docker compose build
-
-docker-clean:
-	docker compose down -v

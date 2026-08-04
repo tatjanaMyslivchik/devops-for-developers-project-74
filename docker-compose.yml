@@ -3,8 +3,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.production
-    image: tatjanamyslivchik/devops-for-developers-project-74:${DOCKER_TAG:-default}
-    working_dir: /app
+    image: tatjanamyslivchik/devops-for-developers-project-74:${DOCKER_TAG:-latest}
     environment:
       - DATABASE_HOST=${DATABASE_HOST}
       - DATABASE_NAME=${DATABASE_NAME}
@@ -17,9 +16,6 @@ services:
   db:
     image: postgres:15-alpine
     environment:
-      # POSTGRES_USER: postgres
-      # POSTGRES_PASSWORD: password
-      # POSTGRES_DB: postgres
       POSTGRES_USER: ${DATABASE_USERNAME}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
